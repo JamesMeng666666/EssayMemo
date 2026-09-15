@@ -100,7 +100,10 @@ export async function onRequestPost({ request, env }) {
         })
       }
     );
-    if (!upstream.ok) return json({ error: 'Gemini request failed.' }, 502);
+    if (!upstream.ok) {
+      console.error('Gemini upstream status:', upstream.status);
+      return json({ error: 'Gemini request failed.', upstreamStatus: upstream.status }, 502);
+    }
     const data = await upstream.json();
     const part = data.candidates?.[0]?.content?.parts?.[0];
     if (task === 'audio')
