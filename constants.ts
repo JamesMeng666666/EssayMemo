@@ -1,6 +1,7 @@
 
 import { Essay, Token, PartOfSpeech, Sentence } from "./types";
 import { v4 as uuidv4 } from 'uuid';
+import { SEVENTH_GRADE_ESSAYS } from './sevenEssays';
 
 // --- Local Dictionary for Offline Initialization ---
 const NOUNS = new Set([
@@ -18,6 +19,64 @@ const ADJS = new Set([
 const ADVS = new Set([
   "originally", "mainly", "especially", "also", "completely", "totally", "quickly", "too", "much", "moreover", "however", "actually", "really", "wisely", "so", "well", "very", "just", "once", "twice", "later", "sadly", "heavily", "sharply", "simply", "automatically", "often", "even", "never", "always", "properly", "naturally", "besides", "recently", "finally", "suddenly", "meanwhile", "fully", "slowly", "again", "usually", "repeatedly", "vividly", "greatly", "truly", "strictly", "successfully", "bravely", "strongly", "firmly", "sincerely"
 ]);
+
+// Vocabulary from the seventh-grade built-in essays, for the three word-hiding levels.
+[
+  'challenge', 'study', 'maths', 'problem', 'sport', 'ping-pong', 'friendship',
+  'student', 'breakfast', 'bus', 'lesson', 'lunchtime', 'canteen', 'nap', 'afternoon',
+  'interest', 'housework', 'homework', 'schedule', 'minute', 'season', 'spring',
+  'winter', 'temperature', 'weather', 'tree', 'leaf', 'flower', 'song', 'bird',
+  'picnic', 'sunshine', 'air', 'energy', 'pollution', 'land', 'bag',
+  'rubbish', 'step', 'planet', 'trip', 'spaceship', 'palace', 'facility',
+  'adventure', 'station', 'greeting', 'spacewalk', 'moon', 'destination',
+  'rock', 'dance', 'meal', 'hotel', 'journey', 'site', 'landscape', 'visitor',
+  'fort', 'spot', 'history', 'street', 'paradise', 'niuza', 'tangshui',
+  'view', 'fountain', 'library', 'reader', 'book', 'area',
+  'achievement', 'collection', 'magnet', 'beijing', 'museum',
+  'passion', 'shape', 'size', 'colour', 'landmark', 'reason', 'person',
+  'mum', 'chance', 'word', 'model', 'holiday', 'harbin', 'northeast',
+  'artwork', 'ice', 'skating', 'cathedral', 'dish', 'pear', 'park',
+  'hole', 'sapling', 'stick', 'sound', 'laughter', 'dog', 'eye',
+  'warhorse', 'soldier', 'cow', 'milk', 'meat', 'elephant', 'hunting',
+  'ivory', 'tiger', 'habitat', 'loss', 'deforestation', 'nature',
+  'source', 'being', 'agriculture', 'farmer', 'crop', 'industry',
+  'machine', 'shortage', 'electricity', 'lighting', 'device',
+  'rule', 'habit', 'appliance', 'power', 'pioneer', 'development',
+  'science', 'research', 'devotion', 'country', 'contribution',
+  'cycling', 'bike', 'gift', 'exercise', 'form'
+].forEach(word => NOUNS.add(word));
+
+[
+  'face', 'count', 'lend', 'explain', 'improve', 'remain', 'catch', 'listen',
+  'chat', 'laugh', 'explore', 'focus', 'adhere', 'rise', 'blossom', 'hike',
+  'bring', 'reuse', 'recycle', 'sort', 'throw', 'ensure', 'travel', 'contact',
+  'float', 'collect', 'visit', 'taste', 'miss', 'volunteer', 'search',
+  'read', 'participate', 'grow', 'develop', 'hold', 'remind', 'present',
+  'lie', 'skate', 'dig', 'care', 'support', 'water', 'plant', 'serve',
+  'threaten', 'hunt', 'conserve', 'unplug', 'brighten', 'protect',
+  'furthered', 'admire', 'contribute', 'balance', 'ride', 'connect', 'embark',
+  'lends', 'explains', 'improved', 'becomes', 'begins', 'began', 'started',
+  'facing', 'arrive', 'arrived', 'enjoy', 'enjoying', 'found', 'finding',
+  'saw', 'gave', 'given', 'returned', 'returning', 'chose', 'chosen'
+].forEach(word => VERBS.add(word));
+
+[
+  'helpful', 'active', 'confident', 'lucky', 'difficult', 'easy', 'busy',
+  'hearty', 'challenging', 'relaxing', 'energetic', 'fulfilling', 'mild',
+  'green', 'cheerful', 'fresh', 'serious', 'disposable', 'plastic',
+  'healthier', 'super-cool', 'floating', 'thrilling', 'vast', 'unique',
+  'unforgettable', 'historic', 'beautiful', 'delicious', 'must-see',
+  'cheap', 'amazing', 'meaningful', 'right', 'fulfilled', 'special',
+  'supportive', 'caring', 'freezing', 'stunning', 'frozen', 'steady',
+  'blind', 'illegal', 'essential', 'sufficient', 'electronic',
+  'energy-efficient', 'large', 'vital', 'excellent', 'strong', 'healthy'
+].forEach(word => ADJS.add(word));
+
+[
+  'carefully', 'patiently', 'afterwards', 'throughout', 'freely',
+  'nearly', 'firstly', 'secondly', 'lastly', 'definitely', 'meanwhile', 'newly',
+  'additionally', 'tirelessly', 'further', 'truly'
+].forEach(word => ADVS.add(word));
 
 // Improved Tokenizer that handles whitespace correctly
 export const smartTokenize = (text: string): Token[] => {
@@ -432,7 +491,7 @@ Li Hua`,
     }
 ];
 
-export const INITIAL_ESSAYS: Essay[] = [...RAW_ESSAYS].reverse().map(raw => ({
+export const INITIAL_ESSAYS: Essay[] = [...RAW_ESSAYS, ...SEVENTH_GRADE_ESSAYS].reverse().map(raw => ({
     id: uuidv4(),
     title: raw.title,
     rawContent: raw.content,
