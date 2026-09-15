@@ -101,8 +101,23 @@ export async function onRequestPost({ request, env }) {
       }
     );
     if (!upstream.ok) {
-      console.error('Gemini upstream status:', upstream.status);
-      return json({ error: 'Gemini request failed.', upstreamStatus: upstream.status }, 502);
+      const errorData = await upstream.json().catch(() => ({}));
+      const message = String(errorData.error?.message || '');
+      const upstreamReason = errorData.error?.details
+        ?.map(detail => detail.reason)
+        .find(reason => typeof reason === 'string' && /^[A-Z_]+$/.test(reason));
+      const errorCategory = upstreamReason
+        || (/api key|key not valid/i.test(message) ? 'API_KEY'
+          : /schema|generationconfig|json payload/i.test(message) ? 'REQUEST_FORMAT'
+          : /model/i.test(message) ? 'MODEL'
+          : /quota|rate limit/i.test(message) ? 'QUOTA'
+          : 'UPSTREAM_REJECTED');
+      console.error('Gemini upstream status and category:', upstream.status, errorCategory);
+      return json({
+        error: 'Gemini request failed.',
+        upstreamStatus: upstream.status,
+        errorCategory
+      }, 502);
     }
     const data = await upstream.json();
     const part = data.candidates?.[0]?.content?.parts?.[0];
