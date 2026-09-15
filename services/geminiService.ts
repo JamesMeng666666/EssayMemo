@@ -10,6 +10,9 @@ const requestGemini = async (task: GeminiTask, text: string): Promise<{ text?: s
         body: JSON.stringify({ task, text })
     });
     if (!response.ok) {
+        const error = await response.json().catch(() => ({}));
+        if (error.errorCategory === 'API_KEY_INVALID' || error.errorCategory === 'API_KEY')
+            throw new Error('The Gemini API key in EdgeOne is invalid. Please update it.');
         throw new Error(response.status === 503
             ? 'Gemini is not configured on EdgeOne.'
             : 'Gemini request failed.');
