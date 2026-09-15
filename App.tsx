@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { v4 as uuidv4 } from 'uuid'; 
-import { INITIAL_ESSAYS, REMOTE_AUDIO_BASE_URL } from './constants';
+import { INITIAL_ESSAYS, REMOTE_AUDIO_BASE_URL, smartTokenize } from './constants';
 import { Essay, PracticeMode, Token, UserAnswers, VerificationResult } from './types';
 import { analyzeTextForMemorization, analyzeTextForTranslation, generateSpeechForText } from './services/geminiService';
 import { playText, playWav, playAudioFromURL, pcmToWav, stopAudio } from './services/audioService';
@@ -41,6 +41,7 @@ const LoadingSpinner = () => (
 
 // --- Helpers ---
 const generateId = () => Date.now().toString(36) + Math.random().toString(36).substr(2);
+const DELETED_BUILTIN_KEY = 'memomaster_deleted_builtin_titles_v1';
 
 const normalizeText = (text: string) => {
     return text.trim().toLowerCase().replace(/[.,/#!$%^&*;:{}=\-_`~()]/g,"");
@@ -82,28 +83,43 @@ export default function App() {
     // Changed key to v3 to force refresh with new translation data
     const STORAGE_KEY = 'memomaster_essays_v3';
     const savedEssays = localStorage.getItem(STORAGE_KEY);
+    let deletedTitles: string[] = [];
+    try {
+      const parsedTitles = JSON.parse(localStorage.getItem(DELETED_BUILTIN_KEY) || '[]');
+      if (Array.isArray(parsedTitles)) deletedTitles = parsedTitles;
+    } catch {
+      // Ignore malformed deletion preferences and keep the saved essays.
+    }
+    const deletedBuiltins = new Set(deletedTitles);
     
     if (savedEssays) {
-      let parsed = JSON.parse(savedEssays);
+      let parsed: Essay[] = JSON.parse(savedEssays);
       
       // Update logic: Sync `audioPath`, `grammarPoints`, and `rawContent` from INITIAL_ESSAYS to `savedEssays`
       // This ensures that if the code is updated with new paths or grammar points, existing users get them.
-      parsed = parsed.map((saved: Essay) => {
-          const fresh = INITIAL_ESSAYS.find(init => init.title === saved.title);
-          if (fresh) {
-              return {
-                  ...saved,
-                  audioPath: fresh.audioPath,
-                  sentences: fresh.sentences,
-                  rawContent: saved.rawContent || fresh.rawContent
-              };
-          }
-          return saved;
-      });
+       parsed = parsed.map((saved: Essay) => {
+           const fresh = INITIAL_ESSAYS.find(init => init.title === saved.title);
+           const rawContent = saved.rawContent || fresh?.rawContent || '';
+           if (fresh && rawContent === fresh.rawContent) {
+               return {
+                   ...saved,
+                   audioPath: fresh.audioPath,
+                   sentences: fresh.sentences,
+                   rawContent,
+                   tokens: smartTokenize(rawContent),
+                   isBuiltIn: true
+               };
+           }
+           return saved.tokens?.map(t => t.text).join('') === rawContent
+             ? { ...saved, rawContent }
+             : { ...saved, rawContent, tokens: smartTokenize(rawContent) };
+       });
+
+       parsed = parsed.filter(saved => !(saved.isBuiltIn && deletedBuiltins.has(saved.title)));
 
       // Add any new INITIAL_ESSAYS that are missing
       const existingTitles = new Set(parsed.map((e: Essay) => e.title));
-      const newEssays = INITIAL_ESSAYS.filter(init => !existingTitles.has(init.title));
+       const newEssays = INITIAL_ESSAYS.filter(init => !existingTitles.has(init.title) && !deletedBuiltins.has(init.title));
       parsed = [...parsed, ...newEssays];
 
       // Remove the old duplicate essay without the prefix
@@ -125,8 +141,9 @@ export default function App() {
       if (parsed.length > 0) setActiveEssayId(parsed[0].id);
     } else {
       // Load initial essays from updated constants
-      setEssays(INITIAL_ESSAYS);
-      if (INITIAL_ESSAYS.length > 0) setActiveEssayId(INITIAL_ESSAYS[0].id);
+       const availableEssays = INITIAL_ESSAYS.filter(init => !deletedBuiltins.has(init.title));
+       setEssays(availableEssays);
+       if (availableEssays.length > 0) setActiveEssayId(availableEssays[0].id);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -210,7 +227,7 @@ export default function App() {
       setNewContent('');
       setMode(PracticeMode.READ);
     } catch (err) {
-      alert("Failed to process essay. Ensure API Key is set.");
+      alert(err instanceof Error ? err.message : "Failed to process essay.");
     } finally {
       setIsProcessing(false);
     }
@@ -219,6 +236,17 @@ export default function App() {
   const handleDeleteEssay = (id: string, e: React.MouseEvent) => {
     e.stopPropagation();
     if (window.confirm("Are you sure you want to delete this essay?")) {
+        const essay = essays.find(ex => ex.id === id);
+        if (essay?.isBuiltIn) {
+            let deletedTitles: string[] = [];
+            try {
+                const parsedTitles = JSON.parse(localStorage.getItem(DELETED_BUILTIN_KEY) || '[]');
+                if (Array.isArray(parsedTitles)) deletedTitles = parsedTitles;
+            } catch {
+                // Replace malformed preferences with the confirmed deletion.
+            }
+            localStorage.setItem(DELETED_BUILTIN_KEY, JSON.stringify([...new Set([...deletedTitles, essay.title])]));
+        }
         const newEssays = essays.filter(ex => ex.id !== id);
         setEssays(newEssays);
         localStorage.setItem('memomaster_essays_v3', JSON.stringify(newEssays));
@@ -236,10 +264,6 @@ export default function App() {
   // --- Audio Export Logic ---
   const handleExportAudio = async () => {
     if (!activeEssay) return;
-    if (!process.env.API_KEY) {
-        alert("Please set your API_KEY to generate high-quality audio.");
-        return;
-    }
 
     setIsDownloadingAudio(true);
     try {
@@ -290,7 +314,7 @@ export default function App() {
 
     } catch (e) {
         console.error(e);
-        alert("Failed to generate audio. Please check your network or API key.");
+        alert(e instanceof Error ? e.message : "Failed to generate audio.");
     } finally {
         setIsDownloadingAudio(false);
     }

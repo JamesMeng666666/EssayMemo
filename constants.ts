@@ -20,16 +20,16 @@ const ADVS = new Set([
 ]);
 
 // Improved Tokenizer that handles whitespace correctly
-const smartTokenize = (text: string): Token[] => {
+export const smartTokenize = (text: string): Token[] => {
    const tokens: Token[] = [];
-   // Match: Words OR Newlines OR Punctuation OR Spaces
-   const regex = /([a-zA-Z0-9']+|[\n]+|[.,!?;:()"]+|\s+)/g; 
+   // Match every character so token rendering reconstructs the source exactly.
+   const regex = /[a-zA-Z0-9]+(?:['’][a-zA-Z0-9]+)*|\r\n|\n|\r|[^\r\n]/gu;
    const matches = text.match(regex);
    
    if (matches) {
        matches.forEach((part, index) => {
            const lower = part.toLowerCase();
-           const isWord = /^[a-z0-9']+$/i.test(part);
+            const isWord = /^[a-z0-9]+(?:['’][a-z0-9]+)*$/i.test(part);
            
            let pos: PartOfSpeech = 'other';
            if (isWord) {
@@ -440,6 +440,7 @@ export const INITIAL_ESSAYS: Essay[] = [...RAW_ESSAYS].reverse().map(raw => ({
     sentences: raw.sentences.map((s, i) => ({ ...s, id: `s-${i}-${Date.now()}` })), // Use pre-defined sentences
     isAnalyzed: true, 
     createdAt: Date.now(),
+    isBuiltIn: true,
     audioPath: raw.audioPath
 }));
 

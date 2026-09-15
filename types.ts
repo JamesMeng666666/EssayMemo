@@ -23,6 +23,7 @@ export interface Essay {
   sentences?: Sentence[]; 
   isAnalyzed: boolean;
   createdAt: number;
+  isBuiltIn?: boolean;
   audioPath?: string; // Path to local audio file (e.g., /audio/filename.wav)
 }
 
