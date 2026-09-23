@@ -491,7 +491,9 @@ Li Hua`,
     }
 ];
 
-export const INITIAL_ESSAYS: Essay[] = [...RAW_ESSAYS, ...SEVENTH_GRADE_ESSAYS].reverse().map(raw => ({
+// Keep all built-in essays in descending course order:
+// 8BU8 ... 8AU1, followed by 7BU8 ... 7AU1.
+export const INITIAL_ESSAYS: Essay[] = [...SEVENTH_GRADE_ESSAYS, ...RAW_ESSAYS].reverse().map(raw => ({
     id: uuidv4(),
     title: raw.title,
     rawContent: raw.content,
