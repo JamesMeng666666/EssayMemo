@@ -78,6 +78,12 @@ const ADVS = new Set([
   'additionally', 'tirelessly', 'further', 'truly'
 ].forEach(word => ADVS.add(word));
 
+// Vocabulary for 9AU4 and its word-hiding practice levels.
+['chris', 'ming', 'language', 'barrier', 'backup', 'patience'].forEach(word => NOUNS.add(word));
+['living', 'joining', 'worry', 'waiting', 'approach', 'showing', 'break', 'feeling', 'welcomed', 'settle', 'seeing'].forEach(word => VERBS.add(word));
+['delighted', 'common', 'homesick', 'normal', 'open', 'minded', 'certain'].forEach(word => ADJS.add(word));
+['abroad'].forEach(word => ADVS.add(word));
+
 // Improved Tokenizer that handles whitespace correctly
 export const smartTokenize = (text: string): Token[] => {
    const tokens: Token[] = [];
@@ -488,11 +494,105 @@ Li Hua`,
             { english: "Yours sincerely,", chinese: "您真诚的，", grammarPoints: "1. 英文信件、推荐信、求职信结尾的常用客套语。" },
             { english: "Li Hua", chinese: "李华", grammarPoints: "1. 信件署名。" }
         ]
+    },
+    {
+        title: "9AU4: Advice on Studying in Shenzhen",
+        audioPath: "/audio/9au4.wav",
+        content: `Dear Chris,
+
+I'm delighted to hear that you'll be joining us in Shenzhen next year. Living abroad is always challenging, so let me offer a few thoughts.
+
+To start with, the language barrier will be the most common problem. Don't let it worry you because most young people here speak some English, and translation apps can serve as a helpful backup.
+
+Besides, building friendships takes patience. Instead of waiting for others to approach you, why not join a club or volunteer for a school event? Showing up is the fastest way to break the ice.
+
+What’s more, feeling homesick in the first few weeks is completely normal. You’d better keep in touch with your family, and stick to the hobbies you love.
+
+Shenzhen is a young and open-minded city that has welcomed students from all over the world. I'm certain you'll settle in and enjoy your time here. Looking forward to seeing you in person.
+
+Yours sincerely,
+Li Ming`,
+        sentences: [
+            {
+                english: "Dear Chris,",
+                chinese: "亲爱的克里斯：",
+                grammarPoints: "Dear + 姓名是英文信件常用的称呼，后面通常用逗号。"
+            },
+            {
+                english: "I'm delighted to hear that you'll be joining us in Shenzhen next year.",
+                chinese: "听说你明年将来到深圳加入我们，我很高兴。",
+                grammarPoints: "1. be delighted to do sth. 很高兴做某事。\n2. that 引导宾语从句，作 hear 的宾语。\n3. will be doing 是将来进行时，此处表示预期将发生的事情。"
+            },
+            {
+                english: "Living abroad is always challenging, so let me offer a few thoughts.",
+                chinese: "在国外生活总是充满挑战，所以让我提供一些想法。",
+                grammarPoints: "1. Living abroad 是动名词短语作主语，谓语用单数 is。\n2. let sb. do sth. 让某人做某事。\n3. a few 修饰可数名词复数，表示“一些”。"
+            },
+            {
+                english: "To start with, the language barrier will be the most common problem.",
+                chinese: "首先，语言障碍将是最常见的问题。",
+                grammarPoints: "1. To start with 首先，用于引出第一条建议或观点。\n2. language barrier 语言障碍。\n3. the most common 是 common 的最高级形式。"
+            },
+            {
+                english: "Don't let it worry you because most young people here speak some English, and translation apps can serve as a helpful backup.",
+                chinese: "别让这件事困扰你，因为这里大多数年轻人都会说一些英语，而且翻译软件可以成为有用的辅助工具。",
+                grammarPoints: "1. Don't + 动词原形构成否定祈使句。\n2. let it worry you 中 worry 用动词原形。\n3. because 引导原因状语从句。\n4. serve as 充当；backup 在这里指辅助工具。"
+            },
+            {
+                english: "Besides, building friendships takes patience.",
+                chinese: "此外，建立友谊需要耐心。",
+                grammarPoints: "1. Besides 此外，表示补充。\n2. building friendships 是动名词短语作主语，谓语用第三人称单数 takes。\n3. patience 是不可数名词，意为“耐心”。"
+            },
+            {
+                english: "Instead of waiting for others to approach you, why not join a club or volunteer for a school event?",
+                chinese: "与其等待别人来接近你，为什么不加入一个社团，或者在学校活动中做志愿者呢？",
+                grammarPoints: "1. instead of + 动名词，表示“而不是；代替”。\n2. wait for sb. to do sth. 等待某人做某事。\n3. approach 在这里是动词，意为“靠近、接近”。\n4. Why not + 动词原形？用于提出建议。"
+            },
+            {
+                english: "Showing up is the fastest way to break the ice.",
+                chinese: "主动参与是打破隔阂的最快方式。",
+                grammarPoints: "1. show up 到场；露面，Showing up 在句中作主语。\n2. the fastest way to do sth. 做某事最快的方式。\n3. break the ice 打破僵局，使初次见面的人放松下来。"
+            },
+            {
+                english: "What’s more, feeling homesick in the first few weeks is completely normal.",
+                chinese: "而且，在最初几周感到想家是完全正常的。",
+                grammarPoints: "1. What's more 而且，用于补充信息。\n2. feel homesick 感到想家；homesick 是形容词。\n3. feeling homesick ... 是动名词短语作主语，谓语用单数 is。\n4. completely 是副词，修饰形容词 normal。"
+            },
+            {
+                english: "You’d better keep in touch with your family, and stick to the hobbies you love.",
+                chinese: "你最好与家人保持联系，并坚持自己喜爱的爱好。",
+                grammarPoints: "1. had better + 动词原形，表示“最好做某事”。\n2. keep in touch with sb. 与某人保持联系。\n3. stick to 坚持，to 是介词，后接名词或动名词。\n4. you love 是省略了关系代词的定语从句，修饰 hobbies。"
+            },
+            {
+                english: "Shenzhen is a young and open-minded city that has welcomed students from all over the world.",
+                chinese: "深圳是一座年轻且思想开放的城市，已经迎来了来自世界各地的学生。",
+                grammarPoints: "1. open-minded 思想开放的。\n2. that 引导定语从句，修饰 city，并在从句中作主语。\n3. has welcomed 是现在完成时，结构为 has + 过去分词。\n4. all over the world 世界各地。"
+            },
+            {
+                english: "I'm certain you'll settle in and enjoy your time here.",
+                chinese: "我相信你会适应这里的新生活，并在这里度过愉快的时光。",
+                grammarPoints: "1. be certain 后可接省略 that 的宾语从句，表示“确信……”。\n2. settle in 安顿下来；适应新环境。\n3. settle 和 enjoy 是由 and 连接的并列动词，共用 will。"
+            },
+            {
+                english: "Looking forward to seeing you in person.",
+                chinese: "期待与你当面相见。",
+                grammarPoints: "1. 这是书信中常见的省略表达，完整形式可写为 I am looking forward to seeing you in person。\n2. look forward to + 动名词，to 是介词。\n3. in person 亲自；当面。"
+            },
+            {
+                english: "Yours sincerely,",
+                chinese: "你真诚的，",
+                grammarPoints: "Yours sincerely 是正式英文信件常用的结尾敬语。"
+            },
+            {
+                english: "Li Ming",
+                chinese: "李明",
+                grammarPoints: "信件署名。"
+            }
+        ]
     }
 ];
 
-// Keep all built-in essays in descending course order:
-// 8BU8 ... 8AU1, followed by 7BU8 ... 7AU1.
+// Keep all built-in essays in descending course order, starting with 9AU4.
 export const INITIAL_ESSAYS: Essay[] = [...SEVENTH_GRADE_ESSAYS, ...RAW_ESSAYS].reverse().map(raw => ({
     id: uuidv4(),
     title: raw.title,
