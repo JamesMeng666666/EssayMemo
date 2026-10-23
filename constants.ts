@@ -84,6 +84,12 @@ const ADVS = new Set([
 ['delighted', 'common', 'homesick', 'normal', 'open', 'minded', 'certain'].forEach(word => ADJS.add(word));
 ['abroad'].forEach(word => ADVS.add(word));
 
+// Vocabulary for the 9AU2 and 9AU3 word-hiding practice levels.
+['musk', 'elon', 'promotion', 'driver', 'courage', 'reality', 'value', 'growth', 'grandpa', 'horse', 'floor', 'piece', 'dad', 'tear', 'truth', 'shame', 'honesty', 'version', 'lifestyle'].forEach(word => NOUNS.add(word));
+['enables', 'require', 'rushed', 'knocked', 'shattered', 'slipped', 'discovered', 'asked', 'pretended', 'said', 'enter', 'nodded', 'welling', 'blaming', 'hiding', 'apologized', 'promised', 'means', 'guides', 'learnt', 'shapes', 'guided', 'feared', 'believed', 'decided', 'influenced', 'solve', 'sticking'].forEach(word => VERBS.add(word));
+['electric', 'expensive', 'affordable', 'global', 'continuous', 'low', 'carbon', 'broken', 'responsible', 'honest', 'real', 'valuable', 'better'].forEach(word => ADJS.add(word));
+['hardly', 'widely', 'far', 'enough', 'gently', 'around'].forEach(word => ADVS.add(word));
+
 // Improved Tokenizer that handles whitespace correctly
 export const smartTokenize = (text: string): Token[] => {
    const tokens: Token[] = [];
@@ -493,6 +499,166 @@ Li Hua`,
             { english: "I firmly believe he is well qualified for this position.", chinese: "我坚信他非常胜任这个职位。", grammarPoints: "1. firmly believe 坚信。\n2. he is... 是省略了 that 的宾语从句。\n3. be well qualified for 极其胜任/符合……的条件。" },
             { english: "Yours sincerely,", chinese: "您真诚的，", grammarPoints: "1. 英文信件、推荐信、求职信结尾的常用客套语。" },
             { english: "Li Hua", chinese: "李华", grammarPoints: "1. 信件署名。" }
+        ]
+    },
+    {
+        title: "9AU2: A Great Idea",
+        audioPath: "/audio/9au2.wav",
+        content: `Dear teachers and classmates,
+
+I’m Li Hua. It’s my honor to share a story about a great idea that changed the world—Musk’s promotion of electric cars.
+
+Years ago, people hardly believed that electric cars could be widely used. On one hand, electric cars were too expensive and there were few charging stations for drivers. On the other hand, people feared that electric cars could not travel far enough for daily trips. To solve these problems, Elon Musk came up with a creative idea. He decided to develop affordable electric cars and build global charging networks. With continuous efforts, he successfully created Tesla and made electric cars popular.
+
+Musk’s idea has greatly influenced modern life. It enables more people to choose clean-energy cars and live a low-carbon lifestyle.
+
+From his story, I realize that great ideas require courage and strong will. Only by sticking to our dreams and taking action can we turn creative thoughts into reality.
+
+Thank you!`,
+        sentences: [
+            {
+                english: "Dear teachers and classmates,",
+                chinese: "亲爱的老师们、同学们：",
+                grammarPoints: "Dear + 称呼是演讲或书信常用的开头。teachers 和 classmates 均使用复数形式。"
+            },
+            {
+                english: "I’m Li Hua.",
+                chinese: "我是李华。",
+                grammarPoints: "I'm 是 I am 的缩写，用于自我介绍。"
+            },
+            {
+                english: "It’s my honor to share a story about a great idea that changed the world—Musk’s promotion of electric cars.",
+                chinese: "我很荣幸能分享一个改变世界的伟大想法的故事——马斯克对电动汽车的推广。",
+                grammarPoints: "1. It's my honor to do sth. 我很荣幸做某事。it 是形式主语，不定式短语是真正的主语。\n2. that 引导定语从句，修饰 a great idea。\n3. promotion 是名词，意为“推广”。\n4. 破折号后的内容具体说明前面的 great idea。"
+            },
+            {
+                english: "Years ago, people hardly believed that electric cars could be widely used.",
+                chinese: "多年前，人们几乎不相信电动汽车能够得到广泛使用。",
+                grammarPoints: "1. hardly 几乎不，具有否定含义。\n2. that 引导宾语从句。\n3. could be + 过去分词是含情态动词的被动语态。widely 是副词，修饰 used。"
+            },
+            {
+                english: "On one hand, electric cars were too expensive and there were few charging stations for drivers.",
+                chinese: "一方面，电动汽车太贵，而且供驾驶员使用的充电站很少。",
+                grammarPoints: "1. On one hand ... On the other hand ... 一方面……另一方面……。\n2. there were 是 there be 句型的一般过去时。\n3. few 修饰可数名词复数，表示“很少，几乎没有”。\n4. charging stations 充电站。"
+            },
+            {
+                english: "On the other hand, people feared that electric cars could not travel far enough for daily trips.",
+                chinese: "另一方面，人们担心电动汽车的续航距离不足以满足日常出行的需要。",
+                grammarPoints: "1. fear 在这里是动词，意为“担心”，后接 that 引导的宾语从句。\n2. enough 修饰形容词或副词时放在其后，如 far enough。\n3. daily trips 日常出行。"
+            },
+            {
+                english: "To solve these problems, Elon Musk came up with a creative idea.",
+                chinese: "为了解决这些问题，埃隆·马斯克想出了一个有创意的点子。",
+                grammarPoints: "1. To solve these problems 是不定式短语作目的状语。\n2. come up with 想出，过去式为 came up with。\n3. a creative idea 一个有创意的点子。"
+            },
+            {
+                english: "He decided to develop affordable electric cars and build global charging networks.",
+                chinese: "他决定开发价格亲民的电动汽车，并建立全球充电网络。",
+                grammarPoints: "1. decide to do sth. 决定做某事。\n2. develop 和 build 是并列的动词，共用前面的 to。\n3. affordable 价格可承受的；global 全球的。"
+            },
+            {
+                english: "With continuous efforts, he successfully created Tesla and made electric cars popular.",
+                chinese: "通过持续努力，他成功创立了特斯拉，并使电动汽车普及起来。",
+                grammarPoints: "1. with continuous efforts 通过持续努力。\n2. successfully 是副词，修饰动词 created。\n3. make + 宾语 + 形容词，表示“使……处于某种状态”；made electric cars popular 意为“使电动汽车受欢迎”。"
+            },
+            {
+                english: "Musk’s idea has greatly influenced modern life.",
+                chinese: "马斯克的想法极大地影响了现代生活。",
+                grammarPoints: "1. has influenced 是现在完成时，强调过去的事情对现在的影响。\n2. greatly 是副词，意为“极大地”。\n3. influence 在这里是动词，意为“影响”。"
+            },
+            {
+                english: "It enables more people to choose clean-energy cars and live a low-carbon lifestyle.",
+                chinese: "它使更多人能够选择清洁能源汽车，过上低碳生活。",
+                grammarPoints: "1. enable sb. to do sth. 使某人能够做某事。\n2. choose 和 live 是由 and 连接的并列动词，共用 to。\n3. live a ... lifestyle 过……的生活。\n4. clean-energy 清洁能源的；low-carbon 低碳的。"
+            },
+            {
+                english: "From his story, I realize that great ideas require courage and strong will.",
+                chinese: "从他的故事中，我认识到伟大的想法需要勇气和坚强的意志。",
+                grammarPoints: "1. realize 后接 that 引导的宾语从句。\n2. require 需要。\n3. courage 勇气；will 在这里是名词，意为“意志”。"
+            },
+            {
+                english: "Only by sticking to our dreams and taking action can we turn creative thoughts into reality.",
+                chinese: "只有坚持梦想并付诸行动，我们才能把有创意的想法变成现实。",
+                grammarPoints: "1. Only + 状语位于句首时，主句使用部分倒装，所以 can 放在主语 we 前。\n2. by + 动名词表示“通过做某事”；sticking 和 taking 是并列成分。\n3. stick to 坚持；take action 采取行动。\n4. turn ... into ... 把……变成……。"
+            },
+            {
+                english: "Thank you!",
+                chinese: "谢谢大家！",
+                grammarPoints: "演讲结束时常用 Thank you 向听众致谢。"
+            }
+        ]
+    },
+    {
+        title: "9AU3: An important lesson I learnt from my family",
+        audioPath: "/audio/9au3.wav",
+        content: `Family shapes our values and guides our growth. I’d like to share a lesson I learnt from my family.
+
+I still remember what happened when I was only seven. While playing hide-and-seek, I rushed into Grandpa’s study and knocked over his glass horse, which fell to the floor and shattered into pieces. Since no one saw me, I slipped away.
+
+When Grandpa discovered the broken pieces and asked who was responsible, I pretended to know nothing. Later that evening, Dad said to me gently, “I saw you enter the study. Did you break the horse?” I nodded, tears welling up in my eyes. Instead of blaming me, Dad said, “It takes courage to tell the truth when no one is watching, but hiding it is a real shame.” I apologized to Grandpa and promised to be honest from then on.
+
+This experience has taught me that true honesty means doing the right thing even when nobody is around. This valuable lesson has guided me towards a better version of myself.`,
+        sentences: [
+            {
+                english: "Family shapes our values and guides our growth.",
+                chinese: "家庭塑造我们的价值观，引导我们成长。",
+                grammarPoints: "1. Family 作主语时，这里把家庭看作一个整体，谓语用第三人称单数。\n2. shapes 和 guides 是并列谓语。\n3. values 价值观；growth 成长。"
+            },
+            {
+                english: "I’d like to share a lesson I learnt from my family.",
+                chinese: "我想分享一个从家人那里学到的道理。",
+                grammarPoints: "1. I'd like to do sth. = I would like to do sth.，表示“我想做某事”。\n2. I learnt from my family 是省略了关系代词的定语从句，修饰 lesson。\n3. learn a lesson 学到一个道理或得到一次教训；learnt 是 learn 的过去式。"
+            },
+            {
+                english: "I still remember what happened when I was only seven.",
+                chinese: "我仍然记得自己只有七岁时发生的事情。",
+                grammarPoints: "1. what happened ... 是宾语从句，作 remember 的宾语。\n2. when 引导时间状语从句。\n3. only seven 表示“只有七岁”，省略了 years old。"
+            },
+            {
+                english: "While playing hide-and-seek, I rushed into Grandpa’s study and knocked over his glass horse, which fell to the floor and shattered into pieces.",
+                chinese: "玩捉迷藏时，我冲进爷爷的书房，撞倒了他的玻璃马。玻璃马掉到地上，摔成了碎片。",
+                grammarPoints: "1. While playing ... 是时间状语从句的省略形式，可还原为 While I was playing ...。\n2. rush into 冲进；knock over 撞倒。\n3. study 在这里是名词，意为“书房”。\n4. which 引导非限制性定语从句，指代 his glass horse。\n5. shatter into pieces 碎成碎片。"
+            },
+            {
+                english: "Since no one saw me, I slipped away.",
+                chinese: "因为没人看见我，我就悄悄溜走了。",
+                grammarPoints: "1. Since 在这里表示“因为”，引导原因状语从句。\n2. no one 没有人。\n3. slip away 悄悄溜走，slipped 是 slip 的过去式。"
+            },
+            {
+                english: "When Grandpa discovered the broken pieces and asked who was responsible, I pretended to know nothing.",
+                chinese: "爷爷发现碎片并问是谁的责任时，我假装什么都不知道。",
+                grammarPoints: "1. When 引导时间状语从句；discovered 和 asked 是并列谓语。\n2. who was responsible 是宾语从句，作 asked 的宾语。\n3. pretend to do sth. 假装做某事。\n4. know nothing 什么都不知道。"
+            },
+            {
+                english: "Later that evening, Dad said to me gently, “I saw you enter the study. Did you break the horse?”",
+                chinese: "那天晚上晚些时候，爸爸温和地对我说：“我看到你进了书房。是你打碎了那匹马吗？”",
+                grammarPoints: "1. later that evening 那天晚上晚些时候。\n2. gently 是副词，意为“温和地”。\n3. see sb. do sth. 看见某人做某事，强调看到动作发生或全过程。\n4. Did + 主语 + 动词原形？构成一般过去时的一般疑问句。"
+            },
+            {
+                english: "I nodded, tears welling up in my eyes.",
+                chinese: "我点了点头，泪水涌上眼眶。",
+                grammarPoints: "1. nodded 是 nod 的过去式。\n2. tears welling up in my eyes 是独立主格结构，用来补充伴随情状。\n3. well up 涌出、涌起。"
+            },
+            {
+                english: "Instead of blaming me, Dad said, “It takes courage to tell the truth when no one is watching, but hiding it is a real shame.”",
+                chinese: "爸爸没有责备我，而是说：“在没人看着的时候说出真相需要勇气，但隐瞒真相才是真正可耻的事。”",
+                grammarPoints: "1. instead of + 动名词，表示“而不是做某事”。\n2. It takes courage to do sth. 做某事需要勇气；it 是形式主语。\n3. tell the truth 说实话。\n4. hiding it 是动名词短语作主语，谓语用单数 is。"
+            },
+            {
+                english: "I apologized to Grandpa and promised to be honest from then on.",
+                chinese: "我向爷爷道歉，并承诺从那以后做一个诚实的人。",
+                grammarPoints: "1. apologize to sb. 向某人道歉。\n2. promise to do sth. 承诺做某事。\n3. be honest 诚实。\n4. from then on 从那时起。"
+            },
+            {
+                english: "This experience has taught me that true honesty means doing the right thing even when nobody is around.",
+                chinese: "这次经历让我明白，真正的诚实意味着即使周围没有别人，也要做正确的事。",
+                grammarPoints: "1. has taught 是现在完成时，表示这次经历对现在仍有影响。\n2. teach sb. that ... 使某人明白……，that 引导宾语从句。\n3. mean doing sth. 意味着做某事。\n4. even when 即使在……的时候。"
+            },
+            {
+                english: "This valuable lesson has guided me towards a better version of myself.",
+                chinese: "这个宝贵的道理一直指引我成为更好的自己。",
+                grammarPoints: "1. valuable 宝贵的。\n2. has guided 是现在完成时，强调过去学到的道理持续产生影响。\n3. guide sb. towards ... 引导某人走向……。\n4. a better version of myself 更好的自己。"
+            }
         ]
     },
     {
